@@ -127,7 +127,7 @@
 			trigger_code,
 			handle_code
 		) VALUES (
-		    #{id}
+		    #{id},
 			#{jobGroup},
 			#{jobId},
 			#{triggerTime},
