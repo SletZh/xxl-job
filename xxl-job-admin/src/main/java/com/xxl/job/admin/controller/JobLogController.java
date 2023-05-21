@@ -71,7 +71,7 @@ public class JobLogController {
 			model.addAttribute("jobInfo", jobInfo);
 
 			// valid permission
-			JobInfoController.validPermission(request, jobInfo.getJobGroup());
+			JobInfoController.validPermission(request, jobInfo.getJobGroup().intValue());
 		}
 
 		return "joblog/joblog.index";
@@ -178,7 +178,7 @@ public class JobLogController {
 		ReturnT<String> runResult = null;
 		try {
 			ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(log.getExecutorAddress());
-			runResult = executorBiz.kill(new KillParam(jobInfo.getId()));
+			runResult = executorBiz.kill(new KillParam(jobInfo.getId().intValue()));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			runResult = new ReturnT<String>(500, e.getMessage());

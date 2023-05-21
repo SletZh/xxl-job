@@ -43,7 +43,7 @@ public class JobCodeController {
 		}
 
 		// valid permission
-		JobInfoController.validPermission(request, jobInfo.getJobGroup());
+		JobInfoController.validPermission(request, jobInfo.getJobGroup().intValue());
 
 		// Glue类型-字典
 		model.addAttribute("GlueTypeEnum", GlueTypeEnum.values());
@@ -88,7 +88,7 @@ public class JobCodeController {
 		xxlJobLogGlueDao.save(xxlJobLogGlue);
 
 		// remove code backup more than 30
-		xxlJobLogGlueDao.removeOld(exists_jobInfo.getId(), 30);
+		xxlJobLogGlueDao.removeOld(exists_jobInfo.getId().intValue(), 30);
 
 		return ReturnT.SUCCESS;
 	}

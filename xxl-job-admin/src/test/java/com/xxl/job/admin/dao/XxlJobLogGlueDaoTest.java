@@ -17,7 +17,7 @@ public class XxlJobLogGlueDaoTest {
     @Test
     public void test(){
         XxlJobLogGlue logGlue = new XxlJobLogGlue();
-        logGlue.setJobId(1);
+        logGlue.setJobId(1L);
         logGlue.setGlueType("1");
         logGlue.setGlueSource("1");
         logGlue.setGlueRemark("1");

@@ -91,7 +91,7 @@ public class JobScheduleHelper {
                                     MisfireStrategyEnum misfireStrategyEnum = MisfireStrategyEnum.match(jobInfo.getMisfireStrategy(), MisfireStrategyEnum.DO_NOTHING);
                                     if (MisfireStrategyEnum.FIRE_ONCE_NOW == misfireStrategyEnum) {
                                         // FIRE_ONCE_NOW 》 trigger
-                                        JobTriggerPoolHelper.trigger(jobInfo.getId(), TriggerTypeEnum.MISFIRE, -1, null, null, null);
+                                        JobTriggerPoolHelper.trigger(jobInfo.getId().intValue(), TriggerTypeEnum.MISFIRE, -1, null, null, null);
                                         logger.debug(">>>>>>>>>>> xxl-job, schedule push trigger : jobId = " + jobInfo.getId() );
                                     }
 
@@ -102,7 +102,7 @@ public class JobScheduleHelper {
                                     // 2.2、trigger-expire < 5s：direct-trigger && make next-trigger-time
 
                                     // 1、trigger
-                                    JobTriggerPoolHelper.trigger(jobInfo.getId(), TriggerTypeEnum.CRON, -1, null, null, null);
+                                    JobTriggerPoolHelper.trigger(jobInfo.getId().intValue(), TriggerTypeEnum.CRON, -1, null, null, null);
                                     logger.debug(">>>>>>>>>>> xxl-job, schedule push trigger : jobId = " + jobInfo.getId() );
 
                                     // 2、fresh next
@@ -115,7 +115,7 @@ public class JobScheduleHelper {
                                         int ringSecond = (int)((jobInfo.getTriggerNextTime()/1000)%60);
 
                                         // 2、push time ring
-                                        pushTimeRing(ringSecond, jobInfo.getId());
+                                        pushTimeRing(ringSecond, jobInfo.getId().intValue());
 
                                         // 3、fresh next
                                         refreshNextValidTime(jobInfo, new Date(jobInfo.getTriggerNextTime()));
@@ -129,7 +129,7 @@ public class JobScheduleHelper {
                                     int ringSecond = (int)((jobInfo.getTriggerNextTime()/1000)%60);
 
                                     // 2、push time ring
-                                    pushTimeRing(ringSecond, jobInfo.getId());
+                                    pushTimeRing(ringSecond, jobInfo.getId().intValue());
 
                                     // 3、fresh next
                                     refreshNextValidTime(jobInfo, new Date(jobInfo.getTriggerNextTime()));

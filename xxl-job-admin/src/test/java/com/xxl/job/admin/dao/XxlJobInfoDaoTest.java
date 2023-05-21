@@ -33,7 +33,7 @@ public class XxlJobInfoDaoTest {
 	@Test
 	public void save_load(){
 		XxlJobInfo info = new XxlJobInfo();
-		info.setJobGroup(1);
+		info.setJobGroup(1L);
 		info.setJobDesc("desc");
 		info.setAuthor("setAuthor");
 		info.setAlarmEmail("setAlarmEmail");
@@ -55,7 +55,7 @@ public class XxlJobInfoDaoTest {
 
 		int count = xxlJobInfoDao.save(info);
 
-		XxlJobInfo info2 = xxlJobInfoDao.loadById(info.getId());
+		XxlJobInfo info2 = xxlJobInfoDao.loadById(info.getId().intValue());
 		info.setScheduleType(ScheduleTypeEnum.FIX_RATE.name());
 		info.setScheduleConf(String.valueOf(44));
 		info.setMisfireStrategy(MisfireStrategyEnum.FIRE_ONCE_NOW.name());

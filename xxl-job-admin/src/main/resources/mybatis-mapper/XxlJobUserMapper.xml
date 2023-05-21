@@ -20,8 +20,9 @@
 	</sql>
 
 	<select id="pageList" parameterType="java.util.HashMap" resultMap="XxlJobUser">
+		SELECT * FROM (
 		SELECT <include refid="Base_Column_List" />
-		FROM xxl_job_user AS t
+		FROM xxl_job_user  t
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
 			<if test="username != null and username != ''">
 				AND t.username like CONCAT(CONCAT('%', #{username}), '%')
@@ -31,12 +32,12 @@
 			</if>
 		</trim>
 		ORDER BY username ASC
-		LIMIT #{offset}, #{pagesize}
+		) WHERE ROWNUM <![CDATA[>]]> #{offset} AND ROWNUM <![CDATA[<]]> #{offset}+#{pagesize}
 	</select>
 
 	<select id="pageListCount" parameterType="java.util.HashMap" resultType="int">
 		SELECT count(1)
-		FROM xxl_job_user AS t
+		FROM xxl_job_user  t
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
 			<if test="username != null and username != ''">
 				AND t.username like CONCAT(CONCAT('%', #{username}), '%')
@@ -49,32 +50,42 @@
 
 	<select id="loadByUserName" parameterType="java.util.HashMap" resultMap="XxlJobUser">
 		SELECT <include refid="Base_Column_List" />
-		FROM xxl_job_user AS t
+		FROM xxl_job_user  t
 		WHERE t.username = #{username}
 	</select>
 
 	<insert id="save" parameterType="com.xxl.job.admin.core.model.XxlJobUser" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO xxl_job_user (
+		    id,
 			username,
 			password,
 			role,
 			permission
 		) VALUES (
+		    #{id},
 			#{username},
 			#{password},
 			#{role},
 			#{permission}
-		);
+		)
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_XXL_JOB_USER_ID.NEXTVAL FROM DUAL
+		</selectKey>
 	</insert>
 
 	<update id="update" parameterType="com.xxl.job.admin.core.model.XxlJobUser" >
 		UPDATE xxl_job_user
-		SET
+		<set>
 			<if test="password != null and password != ''">
 				password = #{password},
 			</if>
-			role = #{role},
-			permission = #{permission}
+			<if test="role!=''">
+				role = #{role},
+			</if>
+			<if test="permission!=''">
+				permission = #{permission}
+			</if>
+		</set>
 		WHERE id = #{id}
 	</update>
 
