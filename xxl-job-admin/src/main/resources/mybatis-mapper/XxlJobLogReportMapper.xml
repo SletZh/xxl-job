@@ -44,15 +44,9 @@
 	<update id="update" >
         UPDATE xxl_job_log_report
         <set>
-			<if test="runningCount!=''">
 				running_count = #{runningCount},
-			</if>
-			<if test="sucCount!=''">
 				suc_count = #{sucCount},
-			</if>
-			<if test="failCount!=''">
 				fail_count = #{failCount},
-			</if>
 			UPDATE_TIME=sysdate
 		</set>
         WHERE trigger_day = #{triggerDay}

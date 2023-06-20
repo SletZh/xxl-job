@@ -45,10 +45,10 @@
 	<update id="update" parameterType="com.xxl.job.admin.core.model.XxlJobGroup" >
 		UPDATE xxl_job_group
 		<set>
-			<if test="appname!=''">
+			<if test="appname!=null and appname!=''">
 				app_name = #{appname},
 			</if>
-			<if test="title!=''">
+			<if test="title!=null and title!=''">
 				title = #{title},
 			</if>
 				address_type = #{addressType},

@@ -1,5 +1,6 @@
 package com.xxl.job.executor.service.jobhandler;
 
+import com.xxl.job.core.context.XxlJobContext;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import org.slf4j.Logger;
@@ -37,7 +38,9 @@ public class SampleXxlJob {
     @XxlJob("demoJobHandler")
     public void demoJobHandler() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
-
+        long jobId=XxlJobContext.getXxlJobContext().getJobId();
+        XxlJobHelper.log(jobId+"");
+        //System.out.println(jobId);
         for (int i = 0; i < 5; i++) {
             XxlJobHelper.log("beat at:" + i);
             TimeUnit.SECONDS.sleep(2);

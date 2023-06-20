@@ -148,27 +148,23 @@
 			<if test="triggerTime!=null">
 				trigger_time= #{triggerTime},
 			</if>
-			<if test="triggerCode!=''">
 				trigger_code= #{triggerCode},
-			</if>
-			<if test="triggerMsg!=''">
+			<if test="triggerMsg!=null and triggerMsg!=''">
 				trigger_msg= #{triggerMsg},
 			</if>
-			<if test="executorAddress!=''">
+			<if test="executorAddress!=null and executorAddress!=''">
 				executor_address= #{executorAddress},
 			</if>
-			<if test="executorHandler!=''">
+			<if test="executorHandler!=null and executorHandler!=''">
 				executor_handler=#{executorHandler},
 			</if>
-			<if test="executorParam!=''">
+			<if test="executorParam!=null and executorParam!=''">
 				executor_param= #{executorParam},
 			</if>
-			<if test="executorShardingParam!=''">
+			<if test="executorShardingParam!=null and executorShardingParam!=''">
 				executor_sharding_param= #{executorShardingParam},
 			</if>
-			<if test="executorFailRetryCount!=''">
 				executor_fail_retry_count= #{executorFailRetryCount}
-			</if>
 		</set>
 		WHERE id= #{id}
 	</update>

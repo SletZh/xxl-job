@@ -185,52 +185,48 @@
 			<if test="jobGroup!=''">
 				job_group = #{jobGroup},
 			</if>
-			<if test="jobDesc!=''">
+			<if test="jobDesc!=null and jobDesc!=''">
 				job_desc = #{jobDesc},
 			</if>
 			<if test="updateTime!=null">
 				update_time = #{updateTime},
 			</if>
-			<if test="author!=''">
+			<if test="author!=null and author!=''">
 				author = #{author},
 			</if>
 			<if test="alarmEmail!=null and alarmEmail!=''">
 				alarm_email = #{alarmEmail},
 			</if>
-			<if test="scheduleType!=''">
+			<if test="scheduleType!=null and scheduleType!=''">
 				schedule_type = #{scheduleType},
 			</if>
-			<if test="scheduleConf!=''">
+			<if test="scheduleConf!=null and scheduleConf!=''">
 				schedule_conf = #{scheduleConf},
 			</if>
-			<if test="misfireStrategy!=''">
+			<if test="misfireStrategy!=null and misfireStrategy!=''">
 				misfire_strategy = #{misfireStrategy},
 			</if>
-			<if test="executorRouteStrategy!=''">
+			<if test="executorRouteStrategy!=null and executorRouteStrategy!=''">
 				executor_route_strategy = #{executorRouteStrategy},
 			</if>
-			<if test="executorHandler!=''">
+			<if test="executorHandler!=null and executorHandler!=''">
 				executor_handler = #{executorHandler},
 			</if>
 			<if test="executorParam!=null and executorParam!=''">
 				executor_param = #{executorParam},
 			</if>
-			<if test="executorBlockStrategy!=''">
+			<if test="executorBlockStrategy!=null and executorBlockStrategy!=''">
 				executor_block_strategy = #{executorBlockStrategy},
 			</if>
-			<if test="executorTimeout!=''">
 				executor_timeout = ${executorTimeout},
-			</if>
-			<if test="executorFailRetryCount!=''">
 				executor_fail_retry_count = ${executorFailRetryCount},
-			</if>
-			<if test="glueType!=''">
+			<if test="glueType!=null and glueType!=''">
 				glue_type = #{glueType},
 			</if>
 			<if test="glueSource!=null and glueSource!=''">
 				glue_source = #{glueSource},
 			</if>
-			<if test="glueRemark!=''">
+			<if test="glueRemark!=null and glueRemark!=''">
 				glue_remark = #{glueRemark},
 			</if>
 			<if test="glueUpdatetime!=null">
@@ -240,12 +236,8 @@
 				child_jobid = #{childJobId},
 			</if>
 				trigger_status = #{triggerStatus},
-			<if test="triggerLastTime!=null">
 				trigger_last_time = #{triggerLastTime},
-			</if>
-			<if test="triggerNextTime!=null">
 				trigger_next_time = #{triggerNextTime}
-			</if>
 		</set>
 		WHERE id = #{id}
 	</update>

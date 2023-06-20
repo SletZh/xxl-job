@@ -60,6 +60,15 @@ public class XxlJobContext {
      */
     private String handleMsg;
 
+    /**
+     * 单线程处理数据量
+     */
+    private int singleThreadDealSize;
+    /**
+     * 执行线程数
+     */
+    private int concurrentSize;
+
 
     public XxlJobContext(long jobId, String jobParam, String jobLogFileName, int shardIndex, int shardTotal) {
         this.jobId = jobId;
@@ -105,6 +114,22 @@ public class XxlJobContext {
 
     public String getHandleMsg() {
         return handleMsg;
+    }
+
+    public int getSingleThreadDealSize() {
+        return singleThreadDealSize;
+    }
+
+    public void setSingleThreadDealSize(int singleThreadDealSize) {
+        this.singleThreadDealSize = singleThreadDealSize;
+    }
+
+    public int getConcurrentSize() {
+        return concurrentSize;
+    }
+
+    public void setConcurrentSize(int concurrentSize) {
+        this.concurrentSize = concurrentSize;
     }
 
     // ---------------------- tool ----------------------

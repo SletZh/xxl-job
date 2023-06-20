@@ -1,6 +1,8 @@
 package com.xxl.job.admin.dao;
 
+import com.xxl.job.admin.core.conf.XxlJobAdminConfig;
 import com.xxl.job.admin.core.model.XxlJobInfo;
+import com.xxl.job.admin.core.model.XxlJobLogReport;
 import com.xxl.job.admin.core.scheduler.MisfireStrategyEnum;
 import com.xxl.job.admin.core.scheduler.ScheduleTypeEnum;
 import org.junit.jupiter.api.Test;
@@ -9,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class XxlJobInfoDaoTest {
@@ -18,6 +22,8 @@ public class XxlJobInfoDaoTest {
 	
 	@Resource
 	private XxlJobInfoDao xxlJobInfoDao;
+	@Resource
+	private XxlJobLogReportDao xxlJobLogReportDao;
 	
 	@Test
 	public void pageList(){
@@ -81,6 +87,54 @@ public class XxlJobInfoDaoTest {
 
 		int ret3 = xxlJobInfoDao.findAllCount();
 
+	}
+
+	@Test
+	public void save_report(){
+		for (int i = 0; i < 3; i++) {
+
+			// today
+			Calendar itemDay = Calendar.getInstance();
+			itemDay.add(Calendar.DAY_OF_MONTH, -i);
+			itemDay.set(Calendar.HOUR_OF_DAY, 0);
+			itemDay.set(Calendar.MINUTE, 0);
+			itemDay.set(Calendar.SECOND, 0);
+			itemDay.set(Calendar.MILLISECOND, 0);
+
+			Date todayFrom = itemDay.getTime();
+
+			itemDay.set(Calendar.HOUR_OF_DAY, 23);
+			itemDay.set(Calendar.MINUTE, 59);
+			itemDay.set(Calendar.SECOND, 59);
+			itemDay.set(Calendar.MILLISECOND, 999);
+
+			Date todayTo = itemDay.getTime();
+
+			// refresh log-report every minute
+			XxlJobLogReport xxlJobLogReport = new XxlJobLogReport();
+			xxlJobLogReport.setTriggerDay(todayFrom);
+			xxlJobLogReport.setRunningCount(0);
+			xxlJobLogReport.setSucCount(0);
+			xxlJobLogReport.setFailCount(0);
+
+			Map<String, Object> triggerCountMap = XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().findLogReport(todayFrom, todayTo);
+			if (triggerCountMap!=null && triggerCountMap.size()>0) {
+				int triggerDayCount = triggerCountMap.containsKey("TRIGGERDAYCOUNT")?Integer.valueOf(String.valueOf(triggerCountMap.get("TRIGGERDAYCOUNT"))):0;
+				int triggerDayCountRunning = triggerCountMap.containsKey("TRIGGERDAYCOUNTRUNNING")?Integer.valueOf(String.valueOf(triggerCountMap.get("TRIGGERDAYCOUNTRUNNING"))):0;
+				int triggerDayCountSuc = triggerCountMap.containsKey("TRIGGERDAYCOUNTSUC")?Integer.valueOf(String.valueOf(triggerCountMap.get("TRIGGERDAYCOUNTSUC"))):0;
+				int triggerDayCountFail = triggerDayCount - triggerDayCountRunning - triggerDayCountSuc;
+
+				xxlJobLogReport.setRunningCount(triggerDayCountRunning);
+				xxlJobLogReport.setSucCount(triggerDayCountSuc);
+				xxlJobLogReport.setFailCount(triggerDayCountFail);
+			}
+
+			// do refresh
+			int ret = XxlJobAdminConfig.getAdminConfig().getXxlJobLogReportDao().update(xxlJobLogReport);
+			if (ret < 1) {
+				XxlJobAdminConfig.getAdminConfig().getXxlJobLogReportDao().save(xxlJobLogReport);
+			}
+		}
 	}
 
 }

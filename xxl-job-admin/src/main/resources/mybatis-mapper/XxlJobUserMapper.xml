@@ -79,10 +79,8 @@
 			<if test="password != null and password != ''">
 				password = #{password},
 			</if>
-			<if test="role!=''">
 				role = #{role},
-			</if>
-			<if test="permission!=''">
+			<if test="permission!=null and permission!=''">
 				permission = #{permission}
 			</if>
 		</set>
