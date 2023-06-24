@@ -45,7 +45,6 @@
 	</sql>
 	
 	<select id="pageList" resultMap="XxlJobLog">
-		select * from (
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_job_log  t
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
@@ -76,7 +75,6 @@
 			</if>
 		</trim>
 		ORDER BY t.trigger_time DESC
-		) where ROWNUM <![CDATA[>]]> #{offset} and ROWNUM <![CDATA[<]]> #{offset} + #{pagesize}
 	</select>
 	
 	<select id="pageListCount" resultType="int">

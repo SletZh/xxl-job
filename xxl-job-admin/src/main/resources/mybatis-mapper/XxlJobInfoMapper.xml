@@ -66,7 +66,6 @@
 	</sql>
 
 	<select id="pageList" parameterType="java.util.HashMap" resultMap="XxlJobInfo">
-		SELECT * FROM (
 		SELECT <include refid="Base_Column_List" />
 		FROM xxl_job_info  t
 		<trim prefix="WHERE" prefixOverrides="AND | OR" >
@@ -87,7 +86,6 @@
 			</if>
 		</trim>
 		ORDER BY id DESC
-		) WHERE ROWNUM <![CDATA[>]]> #{offset} AND ROWNUM <![CDATA[<]]> #{offset} + #{pagesize}
 	</select>
 
 	<select id="pageListCount" parameterType="java.util.HashMap" resultType="int">

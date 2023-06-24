@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.xxl.job.admin.controller.annotation.PermissionLimit;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobUser;
@@ -53,6 +54,7 @@ public class UserController {
                                         String username, int role) {
 
         // page list
+        PageHelper.startPage(start/length+1,length);
         List<XxlJobUser> list = xxlJobUserDao.pageList(start, length, username, role);
         int list_count = xxlJobUserDao.pageListCount(start, length, username, role);
 

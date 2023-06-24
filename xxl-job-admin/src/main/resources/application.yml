@@ -1,0 +1,171 @@
+### tomcat端口 服务名
+server:
+    port: 8085
+    servlet:
+        context-path: /xxl-job-admin
+
+### 启动环境
+spring:
+    profiles:
+        active: DEV
+    ### 前端路径
+    mvc:
+        servlet:
+            load-on-startup: 0
+        static-path-pattern: /static/**
+        resources:
+            static-locations: classpath:/static/
+    freemarker:
+        charset: UTF-8
+        request-context-attribute: request
+        settings:
+            number_format: 0.##########
+        suffix: .ftl
+        templateLoaderPath: classpath:/templates/
+
+### 开启监控
+management:
+    health:
+        mail:
+            enabled: false
+    server:
+        servlet:
+            context-path: /actuator
+### mybatis mapper路径
+mybatis:
+    mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+
+---
+
+###开发
+spring:
+    profiles: DEV
+    datasource:
+        driver-class-name: oracle.jdbc.OracleDriver
+        hikari:
+            auto-commit: true
+            connection-test-query: SELECT 1 from dual
+            connection-timeout: 10000
+            idle-timeout: 30000
+            max-lifetime: 900000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            pool-name: HikariCP
+            validation-timeout: 1000
+        url: jdbc:oracle:thin:@10.1.86.55:1521:cxclmtst
+        username: YJXCLMBUSI
+        password: BU-02sic
+        type: com.zaxxer.hikari.HikariDataSource
+    mail:
+        from: itos-zhangyk@alltrust.com.cn
+        host: mail.alltrust.com.cn
+        username: itos-zhangyk@alltrust.com.cn
+        password: Aics@1234567
+        port: 25
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    socketFactory:
+                        class: javax.net.ssl.SSLSocketFactory
+### 定时任务配置
+xxl:
+    job:
+        accessToken: default_token
+        i18n: zh_CN
+        logretentiondays: 30
+        triggerpool:
+            fast:
+                max: 200
+            slow:
+                max: 100
+
+---
+
+### 验收环境
+spring:
+    profiles: SIT
+    datasource:
+        driver-class-name: oracle.jdbc.OracleDriver
+        hikari:
+            auto-commit: true
+            connection-test-query: SELECT 1 from dual
+            connection-timeout: 10000
+            idle-timeout: 30000
+            max-lifetime: 900000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            pool-name: HikariCP
+            validation-timeout: 1000
+        url: jdbc:oracle:thin:@10.1.86.55:1521:cxclmtst
+        username: BBYJXCLMBUSI
+        password: BUb-02sic
+        type: com.zaxxer.hikari.HikariDataSource
+    mail:
+        from: itos-zhangyk@alltrust.com.cn
+        host: mail.alltrust.com.cn
+        username: itos-zhangyk@alltrust.com.cn
+        password: Aics@1234567
+        port: 25
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    socketFactory:
+                        class: javax.net.ssl.SSLSocketFactory
+### 定时任务配置
+xxl:
+    job:
+        accessToken: LIFECLAIM-XXL-JOB-2023-SIT
+        i18n: zh_CN
+        logretentiondays: 30
+        triggerpool:
+            fast:
+                max: 200
+            slow:
+                max: 100
+
+---
+
+### 生产环境
+spring:
+    profiles: PROD
+    datasource:
+        driver-class-name: oracle.jdbc.OracleDriver
+        hikari:
+            auto-commit: true
+            connection-test-query: SELECT 1 from dual
+            connection-timeout: 10000
+            idle-timeout: 30000
+            max-lifetime: 900000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            pool-name: HikariCP
+            validation-timeout: 1000
+        url: jdbc:oracle:thin:@//10.1.4.197:1521/newclaim
+        username: YJXCLMBUSI
+        password: y-C716-clM
+        type: com.zaxxer.hikari.HikariDataSource
+    mail:
+        from: healthclaim@alltrust.com.cn
+        host: mail.alltrust.com.cn
+        username: healthclaim@alltrust.com.cn
+        password: YcLifeClaim4321!@#
+        port: 25
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    socketFactory:
+                        class: javax.net.ssl.SSLSocketFactory
+### 定时任务配置
+xxl:
+    job:
+        accessToken: LIFECLAIM-XXL-JOB-2023-PROD
+        i18n: zh_CN
+        logretentiondays: 30
+        triggerpool:
+            fast:
+                max: 200
+            slow:
+                max: 100
